@@ -19,6 +19,8 @@ jobs:
             archive: zip
           - target: wasm32-wasi
             archive: zip tar.gz
+          - target: aarch64-unknown-linux-gnu
+            archive: zip tar.gz
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
