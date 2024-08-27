@@ -16,4 +16,4 @@ jobs:
 
       - name: Trigger release.yml workflow
         run: |
-          gh workflow run release.yml -f test_release=true --ref 3-refactoring-workflow --ref ${{ env.BRANCH_NAME }}"
+          gh workflow run release.yml -f test_release=true --ref ${{ env.BRANCH_NAME }}
