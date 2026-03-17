@@ -1,5 +1,8 @@
+# Architecture and version can be overridden: make ARCH=x86_64 VERSION=0.2.0
+ARCH ?= aarch64
+VERSION ?= 0.2.0
 
-ARTIFACT_URL=https://github.com/semsphy/khmercut-rs/releases/download/0.2.0/khmercut-Linux-aarch64-musl.tar.gz
+ARTIFACT_URL=https://github.com/semsphy/khmercut-rs/releases/download/$(VERSION)/khmercut-Linux-$(ARCH)-musl.tar.gz
 LAYER_DIR=layer
 ARTIFACT_FILE=khmercut.tar.gz
 
@@ -17,11 +20,9 @@ extract: download
 	tar -xzf $(ARTIFACT_FILE) -C $(LAYER_DIR)
 	@echo "Artifact downloaded and extracted to $(LAYER_DIR)"
 
-
-
 deploy: extract
 	@echo "Deploying the service..."
-	serverless deploy --verbose
+	npx serverless deploy --verbose
 	rm $(ARTIFACT_FILE)
 
 # Target to clean up

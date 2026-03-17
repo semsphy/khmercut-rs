@@ -12,10 +12,20 @@ This guide explains how to build and deploy a custom AWS Lambda layer for the kh
 
 ## 🚀 Usage
 
-Deploy a layer to aws
+Deploy a layer to AWS:
 
-```shell
+```sh
+# Default (aarch64, version 0.2.0)
 make
+
+# Specify architecture (e.g., x86_64)
+make ARCH=x86_64
+
+# Specify version
+make VERSION=0.2.1
+
+# Specify both architecture and version
+make ARCH=x86_64 VERSION=0.2.1
 ```
 
 ## 📚 Layers
@@ -23,6 +33,7 @@ make
 | Layer                                                      | version |
 |------------------------------------------------------------|---------|
 | arn:aws:lambda:ap-southeast-1:AWS_ACCOUNT_ID:layer:khmercut:VERSION| VERSION      |
+| arn:aws:lambda:ap-southeast-1:692859920286:layer:khmercut:3        | 3            |
 
 
 ## 🔗 References
