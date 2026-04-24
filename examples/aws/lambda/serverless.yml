@@ -27,8 +27,6 @@ layers:
     path: layer
     name: khmercut
     description: khmercut for AWS Lambda
-    compatibleArchitectures:
-      - arm64
     licenseInfo: GPLv3
     retain: false
 
