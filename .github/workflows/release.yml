@@ -78,6 +78,27 @@ jobs:
     runs-on: ${{ matrix.platform.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Resolve version tag
+        id: version_tag
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            tag="${{ github.event.release.tag_name }}"
+          else
+            tag="$(git tag --sort=-version:refname | head -n1)"
+          fi
+
+          if [[ -z "${tag}" ]]; then
+            echo "No git tag available to derive version."
+            exit 1
+          fi
+
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "Using version tag: ${tag}"
       - name: Cache cargo & target directories
         uses: Swatinem/rust-cache@v2
         with:
@@ -93,6 +114,8 @@ jobs:
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
+        env:
+          GITHUB_REF_NAME: ${{ steps.version_tag.outputs.tag }}
         with:
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}

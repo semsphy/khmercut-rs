@@ -7,7 +7,7 @@ use std::io::{stdin, stdout, BufRead, BufReader, Result, Write};
 static MODEL_FILE: &'static [u8] = std::include_bytes!("crf_ner_10000.crfsuite");
 
 #[derive(Parser, Debug)]
-#[command(author = "Seanghay Yath", version, about = "Fast Khmer word segmentation tool", long_about = None)]
+#[command(author = "Seanghay Yath", version = env!("APP_VERSION"), about = "Fast Khmer word segmentation tool", long_about = None)]
 struct Args {
     #[arg(short, long, default_value = " ")]
     delimiter: String,
