@@ -1,5 +1,9 @@
 name: 'Release binary'
 on:
+  push:
+    tags:
+      - '*'
+
   workflow_dispatch:
     inputs:
       test_release:
@@ -7,12 +11,9 @@ on:
         required: false
         type: boolean
 
-  release:
-    types: [created]
-
 jobs:
   release:
-    if: ${{ github.event_name == 'release' || github.event.inputs.test_release == 'true' }}
+    if: ${{ github.event_name == 'push' || github.event.inputs.test_release == 'true' }}
     strategy:
       fail-fast: true
       matrix:
@@ -86,8 +87,8 @@ jobs:
         id: version_tag
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "release" ]]; then
-            tag="${{ github.event.release.tag_name }}"
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            tag="${{ github.ref_name }}"
           else
             tag="$(git tag --sort=-version:refname | head -n1)"
           fi
@@ -145,6 +146,6 @@ jobs:
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
         with:
-            draft: true
+            draft: false
             files: "khmercut*"
             body_path: CHANGELOG.md
