@@ -21,14 +21,14 @@ jobs:
 
             # linux
           - release_for: Linux-x86_64
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             bin: khmercut
             name: khmercut-Linux-x86_64-musl.tar.gz
             command: build
 
           - release_for: Linux-aarch64
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: aarch64-unknown-linux-musl
             bin: khmercut
             name: khmercut-Linux-aarch64-musl.tar.gz
@@ -67,7 +67,7 @@ jobs:
 
             # wasm
           - release_for: WASM
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             target: wasm32-unknown-unknown
             bin: khmercut.wasm
             name: khmercut-wasm.tar.gz
@@ -106,15 +106,8 @@ jobs:
           key: "v2"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install cross
-        run: cargo install cross
-
-      - name: Update Cargo.lock
-        run: cargo update
-
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         env:
           GITHUB_REF_NAME: ${{ steps.version_tag.outputs.tag }}
         with:
